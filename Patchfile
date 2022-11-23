@@ -1,0 +1,27 @@
+diff -ru linux-5.19.8/arch/x86/entry/syscalls/syscall_64.tbl linux-5.19.8-changed/arch/x86/entry/syscalls/syscall_64.tbl
+--- linux-5.19.8/arch/x86/entry/syscalls/syscall_64.tbl	2022-09-08 14:54:08.000000000 +0530
++++ linux-5.19.8-changed/arch/x86/entry/syscalls/syscall_64.tbl	2022-11-23 21:13:11.610003068 +0530
+@@ -372,7 +372,8 @@
+ 448	common	process_mrelease	sys_process_mrelease
+ 449	common	futex_waitv		sys_futex_waitv
+ 450	common	set_mempolicy_home_node	sys_set_mempolicy_home_node
+-
++451	common	hello_system_call	sys_hello
++452	common	kernel_2d_memcpy_systemcall	sys_kernel_2d_memcpy
+ #
+ # Due to a historical design error, certain syscalls are numbered differently
+ # in x32 as compared to native x86_64.  These syscalls have numbers 512-547.
+Only in linux-5.19.8-changed: hello_syscall
+Only in linux-5.19.8-changed: kernel_2d_memcpy_syscall
+diff -ru linux-5.19.8/Makefile linux-5.19.8-changed/Makefile
+--- linux-5.19.8/Makefile	2022-09-08 14:54:08.000000000 +0530
++++ linux-5.19.8-changed/Makefile	2022-11-23 21:28:57.630005668 +0530
+@@ -1100,7 +1100,7 @@
+ export MODULES_NSDEPS := $(extmod_prefix)modules.nsdeps
+ 
+ ifeq ($(KBUILD_EXTMOD),)
+-core-y			+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/
++core-y			+= kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ hello_syscall/ kernel_2d_memcpy_syscall/
+ core-$(CONFIG_BLOCK)	+= block/
+ core-$(CONFIG_IO_URING)	+= io_uring/
+ 
